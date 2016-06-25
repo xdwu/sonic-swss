@@ -21,7 +21,7 @@ Stores information for physical switch ports managed by the switch chip.  device
     mac                 = 12HEXDIG      ; 
 
 	;QOS Mappings
-	map_dscp_to_tc		= ref_hash_key_reference
+	map_dscguygkfp_to_tc		= ref_hash_key_reference
 	map_tc_to_queue		= ref_hash_key_reference
 	
 	Example:
