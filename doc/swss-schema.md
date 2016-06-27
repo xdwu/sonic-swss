@@ -283,8 +283,8 @@ and reflects the LAG ports into the redis under: `LAG_TABLE:<team0>:port`
 ###ACL_POLICY_TABLE
 ; Define ACL Policy Table
 ; Status: Working in progress
-  key		= ACL_POLICY_TABLE:policy_name          ; policy_name must be unique
-  policy_name	= 1*64VCHAR                             ; name of the ACL policy, must be unique
+  key           = ACL_POLICY_TABLE:policy_name          ; policy_name must be unique
+  policy_name   = 1*64VCHAR                             ; name of the ACL policy, must be unique
   ports         = [1-max_ports]*port_name               ; the ports to which this ACL policy is applied,
                                                         ; ACL policy should at least apply to One port
   port_name     = 1*64VCHAR                             ; name of the port, must be unique
