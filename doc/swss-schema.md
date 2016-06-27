@@ -283,38 +283,35 @@ and reflects the LAG ports into the redis under: `LAG_TABLE:<team0>:port`
 ###ACL_POLICY_TABLE
 ; Define ACL Policy Table
 ; Status: Working in progress
-  key		= ACL_POLICY_TABLE:policy_name		; policy_name must be unique
-  policy_name	= 1*64VCHAR     			; name of the ACL policy, must be unique
+  key		= ACL_POLICY_TABLE:policy_name          ; policy_name must be unique
+  policy_name	= 1*64VCHAR                             ; name of the ACL policy, must be unique
+  ports         = [1-max_ports]*port_name               ; the ports to which this ACL policy is applied,
+                                                        ; ACL policy should at least apply to One port
+  port_name     = 1*64VCHAR                             ; name of the port, must be unique
+  max_ports     = 1*5DIGIT                              ; number of ports supported on the chip
  
 ---------------------------------------------
 ###ACL_RULE_TABLE
 ; Define rules associated with a specific ACL Policy
 ; Status: Working in progress
-  key: ACL_RULE_TABLE:policy_name:seq			; seq is the index of the rules when the packet is filtered by the ACL "policy_name"
-  action	= "permit"/"deny"			; action when the fields are matched
-  protocol	= "ip"/"icmp"/"tcp"/"udp"/"any"		; options of the protocol field
-  ip_src 	= IPprefix/"any"  			; options of the source ip address (and mask)
-  ip_dst	= IPprefix/"any"			; options of the destination ip address (and mask)
-  l4_src_port	= port_num/[port_num_L-port_num_H]	; L4 source port or the range of ports
-  l4_dst_port	= port_num/[port_num_L-port_num_H]	; L4 destination port or the range of ports
-  seq		= 1*DIGIT				; sequence number of the rules assocaited with this ACL policy
-  port_num	= 1*5DIGIT				; a number between 0 and 65535, port_num_L < port_num_H
-  							; eq port X: 	X
-							; gt port X:	[X-65535]
-							; lt port X; 	[0-X]
-							; range X, Y	[X-Y]
+  key: ACL_RULE_TABLE:policy_name:seq                   ; seq is the index of the rules when the packet is filtered 
+                                                        ; by the ACL "policy_name". A Rule is always assocaited with a 
+                                                        ; a policy. 
+  action        = "permit"/"deny"                       ; action when the fields are matched
+  protocol      = l3_protocol/l4_protocol               ; protocol field for the filter
+  ip_src        = IPprefix/"any"                        ; options of the source ip address (and mask)
+  ip_dst        = IPprefix/"any"                        ; options of the destination ip address (and mask)
+  l4_src_port   = port_num/[port_num_L-port_num_H]      ; L4 source port or the range of ports
+  l4_dst_port   = port_num/[port_num_L-port_num_H]      ; L4 destination port or the range of ports
 
----------------------------------------------
-###ACL_INTERFACE_TABLE
-; Define the interfaces (ports) to which the ACL Policy is applied 
-; Only One ACL Policy can be applied to an interface
-; One ACL can be applied to multiple interfaces
-; Status: Working in progress
-  key: ACL_INTERFACE_TABLE:policy_name:port_name	; ACL policy defined in "policy_name" is applied to this interface 
-  port_name	= 1*64VCHAR 				; name of this port
+  seq           = 1*DIGIT                               ; sequence number of the rules assocaited with this ACL policy
+  l3_protocol   = "ip"/"any"                            ; options of the l3_protocol fields
+  l4_protocol   = "icmp"/"tcp"/"udp"/"any"              ; options of the l4_protocol fields
+  port_num      = 1*5DIGIT                              ; a number between 0 and 65535
+  port_num_L    = 1*5DIGIT                              ; a number between 0 and 65535, port_num_L < port_num_H
+  port_num_H    = 1*5DIGIT                              ; a number between 0 and 65535, port_num_L < port_num_H
   
-  
-  
+ 
 ###Configuration files
 What configuration files should we have?  Do apps, orch agent each need separate files?  
 
