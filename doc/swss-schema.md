@@ -298,20 +298,36 @@ and reflects the LAG ports into the redis under: `LAG_TABLE:<team0>:port`
                                                         ; by the ACL "policy_name". A Rule is always assocaited with a 
                                                         ; a policy. 
   action        = "permit"/"deny"                       ; action when the fields are matched
-  protocol      = l3_protocol/l4_protocol               ; protocol field for the filter
-  ip_src        = IPprefix/"any"                        ; options of the source ip address (and mask)
-  ip_dst        = IPprefix/"any"                        ; options of the destination ip address (and mask)
+  l2_prot_type  = "ipv4"/"ipv6"                         ; options of the l2_protocol_type fields
+  l3_prot_type  = "icmp"/"tcp"/"udp"/"any"              ; options of the l3_protocol_type fields 
+  ipv4_src      = ipv4_prefix/"any"                     ; options of the source ip address (and mask)
+  ipv4_dst      = ipv4_prefix/"any"                     ; options of the destination ip address (and mask)
+  ipv6_src      = ipv6_prefix/"any"                     ; options of the source ip address (and mask)
+  ipv6_dst      = ipv6_prefix/"any"                     ; options of the destination ip address (and mask)
   l4_src_port   = port_num/[port_num_L-port_num_H]      ; L4 source port or the range of ports
   l4_dst_port   = port_num/[port_num_L-port_num_H]      ; L4 destination port or the range of ports
-
   seq           = 1*DIGIT                               ; sequence number of the rules assocaited with this ACL policy
-  l3_protocol   = "ip"/"any"                            ; options of the l3_protocol fields
-  l4_protocol   = "icmp"/"tcp"/"udp"/"any"              ; options of the l4_protocol fields
   port_num      = 1*5DIGIT                              ; a number between 0 and 65535
   port_num_L    = 1*5DIGIT                              ; a number between 0 and 65535, port_num_L < port_num_H
   port_num_H    = 1*5DIGIT                              ; a number between 0 and 65535, port_num_L < port_num_H
-  
- 
+  ipv6_prefix   =                                6( h16 ":" ) ls32
+                    /                       "::" 5( h16 ":" ) ls32
+                    / [               h16 ] "::" 4( h16 ":" ) ls32
+                    / [ *1( h16 ":" ) h16 ] "::" 3( h16 ":" ) ls32
+                    / [ *2( h16 ":" ) h16 ] "::" 2( h16 ":" ) ls32
+                    / [ *3( h16 ":" ) h16 ] "::"    h16 ":"   ls32
+                    / [ *4( h16 ":" ) h16 ] "::"              ls32
+                    / [ *5( h16 ":" ) h16 ] "::"              h16
+                    / [ *6( h16 ":" ) h16 ] "::"
+  h16           = 1*4HEXDIG
+  ls32          = ( h16 ":" h16 ) / IPv4address
+  ipv4_prefix   = dec-octet "." dec-octet "." dec-octet "." dec-octet “/” %d1-32  
+  dec-octet     = DIGIT                     ; 0-9
+                    / %x31-39 DIGIT         ; 10-99
+                    / "1" 2DIGIT            ; 100-199
+                    / "2" %x30-34 DIGIT     ; 200-249
+                    / "25" %x30-35          ; 250-255
+                    
 ###Configuration files
 What configuration files should we have?  Do apps, orch agent each need separate files?  
 
