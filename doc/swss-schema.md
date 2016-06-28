@@ -285,8 +285,8 @@ and reflects the LAG ports into the redis under: `LAG_TABLE:<team0>:port`
 ; Status: Working in progress
   key           = ACL_POLICY_TABLE:policy_name          ; policy_name must be unique
   policy_name   = 1*64VCHAR                             ; name of the ACL policy, must be unique
-  ports         = [1-max_ports]*port_name               ; the ports to which this ACL policy is applied,
-                                                        ; ACL policy should at least apply to One port
+  ports         = [0-max_ports]*port_name               ; the ports to which this ACL policy is applied,
+                                                        ; ACL policy might not be applied to any interface yet.
   port_name     = 1*64VCHAR                             ; name of the port, must be unique
   max_ports     = 1*5DIGIT                              ; number of ports supported on the chip
  
@@ -300,13 +300,16 @@ and reflects the LAG ports into the redis under: `LAG_TABLE:<team0>:port`
   action        = "permit"/"deny"                       ; action when the fields are matched
   l2_prot_type  = "ipv4"/"ipv6"                         ; options of the l2_protocol_type fields
   l3_prot_type  = "icmp"/"tcp"/"udp"/"any"              ; options of the l3_protocol_type fields 
-  ipv4_src      = ipv4_prefix/"any"                     ; options of the source ip address (and mask)
-  ipv4_dst      = ipv4_prefix/"any"                     ; options of the destination ip address (and mask)
-  ipv6_src      = ipv6_prefix/"any"                     ; options of the source ip address (and mask)
-  ipv6_dst      = ipv6_prefix/"any"                     ; options of the destination ip address (and mask)
-  l4_src_port   = port_num/[port_num_L-port_num_H]      ; L4 source port or the range of ports
-  l4_dst_port   = port_num/[port_num_L-port_num_H]      ; L4 destination port or the range of ports
-  seq           = 1*DIGIT                               ; sequence number of the rules assocaited with this ACL policy
+  ipv4_src      = ipv4_prefix/"any"                     ; options of the source ipv4 address (and mask)
+  ipv4_dst      = ipv4_prefix/"any"                     ; options of the destination ipv4 address (and mask)
+  ipv6_src      = ipv6_prefix/"any"                     ; options of the source ipv6 address (and mask)
+  ipv6_dst      = ipv6_prefix/"any"                     ; options of the destination ipv6 address (and mask)
+                                                        ; l2_prot_type detemines which set of the addresses taking effect, v4 or v6.
+  l4_src_port   = port_num/[port_num_L-port_num_H]      ; source L4 port or the range of L4 ports
+  l4_dst_port   = port_num/[port_num_L-port_num_H]      ; destination L4 port or the range of L4 ports
+  seq           = 1*DIGIT                               ; unique sequence number of the rules assocaited within this ACL policy.
+                                                        ; When applying this ACL policy, the seq determines the order of the 
+                                                        ; rules applied. 
   port_num      = 1*5DIGIT                              ; a number between 0 and 65535
   port_num_L    = 1*5DIGIT                              ; a number between 0 and 65535, port_num_L < port_num_H
   port_num_H    = 1*5DIGIT                              ; a number between 0 and 65535, port_num_L < port_num_H
