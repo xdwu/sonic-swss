@@ -294,19 +294,19 @@ and reflects the LAG ports into the redis under: `LAG_TABLE:<team0>:port`
 ###ACL_RULE_TABLE
 ; Define rules associated with a specific ACL Policy
 ; Status: Working in progress
-  key: ACL_RULE_TABLE:policy_name:seq                   ; seq is the index of the rules when the packet is filtered 
-                                                        ; by the ACL "policy_name". A Rule is always assocaited with a 
-                                                        ; a policy. 
+  key: ACL_RULE_TABLE:policy_name:seq                   ; key of the rule entry in the table, seq is the order of the rules 
+                                                        ; when the packet is filtered by the ACL "policy_name". 
+                                                        ; A rule is always assocaited with a policy. 
   action        = "permit"/"deny"                       ; action when the fields are matched
-  l2_prot_type  = "ipv4"/"ipv6"                         ; options of the l2_protocol_type fields
-  l3_prot_type  = "icmp"/"tcp"/"udp"/"any"              ; options of the l3_protocol_type fields 
-  ipv4_src      = ipv4_prefix/"any"                     ; options of the source ipv4 address (and mask)
-  ipv4_dst      = ipv4_prefix/"any"                     ; options of the destination ipv4 address (and mask)
-  ipv6_src      = ipv6_prefix/"any"                     ; options of the source ipv6 address (and mask)
-  ipv6_dst      = ipv6_prefix/"any"                     ; options of the destination ipv6 address (and mask)
+  l2_prot_type  = "ipv4"/"ipv6"                         ; options of the l2_protocol_type field
+  l3_prot_type  = "icmp"/"tcp"/"udp"/"any"              ; options of the l3_protocol_type field 
+  ipv4_src      = ipv4_prefix/"any"                     ; options of the source ipv4 address (and mask) field
+  ipv4_dst      = ipv4_prefix/"any"                     ; options of the destination ipv4 address (and mask) field
+  ipv6_src      = ipv6_prefix/"any"                     ; options of the source ipv6 address (and mask) field
+  ipv6_dst      = ipv6_prefix/"any"                     ; options of the destination ipv6 address (and mask) field
                                                         ; l2_prot_type detemines which set of the addresses taking effect, v4 or v6.
-  l4_src_port   = port_num/[port_num_L-port_num_H]      ; source L4 port or the range of L4 ports
-  l4_dst_port   = port_num/[port_num_L-port_num_H]      ; destination L4 port or the range of L4 ports
+  l4_src_port   = port_num/[port_num_L-port_num_H]      ; source L4 port or the range of L4 ports field 
+  l4_dst_port   = port_num/[port_num_L-port_num_H]      ; destination L4 port or the range of L4 ports field
   seq           = 1*DIGIT                               ; unique sequence number of the rules assocaited within this ACL policy.
                                                         ; When applying this ACL policy, the seq determines the order of the 
                                                         ; rules applied. 
