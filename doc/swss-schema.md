@@ -289,7 +289,6 @@ and reflects the LAG ports into the redis under: `LAG_TABLE:<team0>:port`
                                                         ; ACL policy might not be applied to any interface yet.
   port_name     = 1*64VCHAR                             ; name of the port, must be unique
   max_ports     = 1*5DIGIT                              ; number of ports supported on the chip
- 
 ---------------------------------------------
 ###ACL_RULE_TABLE
 ; Define rules associated with a specific ACL Policy
