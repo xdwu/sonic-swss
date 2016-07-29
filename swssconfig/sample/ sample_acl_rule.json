@@ -1,0 +1,133 @@
+[
+        {
+            "ACL_RULE_TABLE:traffic_outbound_acl:10": {
+                "action": "permit",
+                "l2_prot_type": "ipv4",
+                "l3_prot_type": "any",
+                "ipv4_src": "192.168.0.0/10",
+                "ipv4_dst": "any",
+                "ipv6_src": "any",
+                "ipv6_dst": "any",
+                "l4_src_port":"0",
+                "l4_dst_port":"0"
+            }
+        },
+        {
+            "ACL_RULE_TABLE:traffic_outbound_acl:20": {
+                "action": "permit",
+                "l2_prot_type": "ipv4",
+                "l3_prot_type": "any",
+                "ipv4_src": "172.16.0.0/12",
+                "ipv4_dst": "any",
+                "ipv6_src": "any",
+                "ipv6_dst": "any",
+                "l4_src_port":"0",
+                "l4_dst_port":"0"
+            }
+        },
+        {
+            "ACL_RULE_TABLE:traffic_outbound_acl:30": {
+                "action": "permit",
+                "l2_prot_type": "ipv4",
+                "l3_prot_type": "any",
+                "ipv4_src": "10.10.0.0/16",
+                "ipv4_dst": "any",
+                "ipv6_src": "any",
+                "ipv6_dst": "any",
+                "l4_src_port":"0",
+                "l4_dst_port":"0"
+            }
+        },
+
+       {
+            "ACL_RULE_TABLE:traffic_returning:10": {
+                "action": "permit",
+                "l2_prot_type": "ipv4",
+                "l3_prot_type": "any",
+                "ipv4_src": "10.12.2.0/24",
+                "ipv4_dst": "any",
+                "ipv6_src": "any",
+                "ipv6_dst": "any",
+                "l4_src_port":"0",
+                "l4_dst_port":"0"
+            }
+        },
+        {
+            "ACL_RULE_TABLE:traffic_returning:20": {
+                "action": "permit",
+                "l2_prot_type": "ipv4",
+                "l3_prot_type": "any",
+                "ipv4_src": "10.12.6.0/23",
+                "ipv4_dst": "any",
+                "ipv6_src": "any",
+                "ipv6_dst": "any",
+                "l4_src_port":"0",
+                "l4_dst_port":"0"
+            }
+        },
+        {
+            "ACL_RULE_TABLE:traffic_company:10" : {
+                "action": "permit",
+                "l2_prot_type": "ipv4",
+                "l3_prot_type": "icmp",
+                "ipv4_src": "192.168.1.0/16",
+                "ipv4_dst": "172.16.1.0/23",
+                "ipv6_src": "any",
+                "ipv6_dst": "any",
+                "l4_src_port":"0",
+                "l4_dst_port":"0"
+            }
+        },
+        {
+            "ACL_RULE_TABLE:traffic_company:20" : {
+                "action": "permit",
+                "l2_prot_type": "ipv4",
+                "l3_prot_type": "tcp",
+                "ipv4_src": "192.168.1.0/16",
+                "ipv4_dst": "172.16.1.0/23",
+                "ipv6_src": "any",
+                "ipv6_dst": "any",
+                "l4_src_port":"1023-65535",
+                "l4_dst_port":"80-89"
+            }
+        },
+       {
+            "ACL_RULE_TABLE:traffic_company:30" : {
+                "action": "permit",
+                "l2_prot_type": "ipv4",
+                "l3_prot_type": "tcp",
+                "ipv4_src": "192.168.1.0/16",
+                "ipv4_dst": "172.16.1.0/23",
+                "ipv6_src": "any",
+                "ipv6_dst": "any",
+                "l4_src_port":"1023-65535",
+                "l4_dst_port":"443"
+            }
+        },
+        {
+            "ACL_RULE_TABLE:traffic_internet:10" : {
+                "action": "permit",
+                "l2_prot_type": "ipv4",
+                "l3_prot_type": "tcp",
+                "ipv4_src": "any",
+                "ipv4_dst": "172.16.1.0/23",
+                "ipv6_src": "any",
+                "ipv6_dst": "any",
+                "l4_src_port":"1023-65535",
+                "l4_dst_port":"80"
+            }
+        },
+        {
+            "ACL_RULE_TABLE:catch_all:20" : {
+                "action": "deny",
+                "l2_prot_type": "ipv4",
+                "l3_prot_type": "any",
+                "ipv4_src": "any",
+                "ipv4_dst": "any",
+                "ipv6_src": "any",
+                "ipv6_dst": "any",
+                "l4_src_port":"0",
+                "l4_dst_port":"0"
+            }
+        }
+]
