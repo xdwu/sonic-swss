@@ -1,0 +1,28 @@
+
+[
+        {
+            "ACL_POLICY_TABLE:global_outbound_acl": {
+                "ports": "Ethernet1 Ethernet2 Ethernet3"
+            }
+        },
+        {
+            "ACL_POLICY_TABLE:traffic_returning": {
+                "ports": "Ethernet3 Ethernet4 Ethernet5"
+            }
+        },
+        {
+            "ACL_POLICY_TABLE:traffic_company": {
+                "ports": "Ethernet6 Ethernet7"
+            }
+        },
+        {
+            "ACL_POLICY_TABLE:traffic_internet" : {
+                "ports": "Ethernet1 Ethernet9"
+            }
+        },
+        {
+            "ACL_POLICY_TABLE:catch_all" : {
+                "ports": "Ethernet1 Ethernet2 Ethernet3 Ethernet4 Ethernet5 Ethernet6 Ethernet7 Ethernet8 Ethernet9"
+            }
+        }
+    ]
